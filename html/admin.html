@@ -52,16 +52,18 @@
       let td1 = document.createElement("td");
       let td2 = document.createElement("td")
       let td3 = document.createElement("td")
+      var role = document.createElement("h6")
       let td4 = document.createElement("td")
       let changeRoleBtn = document.createElement("button")
 
       td1.innerHTML = ++userNo;
       td2.innerHTML = firstname + " " + lastname;
-      td3.innerHTML = roleNo;
       td4.innerHTML = uid;
+      role.innerHTML = roleNo;
+      td3.appendChild(role)
+
       changeRoleBtn.innerHTML = "Change Role?"
       changeRoleBtn.classList.add("change-button")
-
       td3.appendChild(changeRoleBtn)
 
       trow.appendChild(td1)
@@ -92,18 +94,21 @@
       })
     }
 
-    // Add event listener to handle role change button clicks
-    tbody.addEventListener("click", function(event) {
+  tbody.addEventListener("click", function(event) {
     if (event.target.classList.contains("change-button")) {
-      // Retrieve the user ID associated with the row
+
       let userUid = event.target.closest("tr").querySelector("td:nth-child(4)").innerHTML;
       
+      let currentRole = event.target.closest("td").querySelector("h6").innerHTML;
 
-      // Example: Prompt user for new role
-      let newRole = prompt("Enter the new role:");
+      if (currentRole !== null) {
+        if(currentRole == 1){
+          updateRole(userUid,0)
+        }
 
-      if (newRole !== null) {
-        updateRole(userUid,newRole);
+        else if(currentRole == 0){
+          updateRole(userUid,1)
+        }
       }
     }
   });
