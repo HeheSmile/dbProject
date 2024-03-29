@@ -80,7 +80,7 @@
       user.forEach(element => {
         addItemToTable(element.firstname, element.lastname, element.roleNo, element.uid);
       });
-    }
+    } 
 
     function getAllData(){
       const dbref = ref(db)
@@ -127,10 +127,14 @@
       });
   }
 
-    let signOutBtn = document.getElementById("sign-out-button");
+  let signOutBtn = document.getElementById("sign-out-button");
     signOutBtn.addEventListener("click", function(){
       location.href = "./login.html";
-    })
+  })
+
+  const uploadProducts = () =>{
+    
+  }
 
     window.onload = getAllData;
   </script>

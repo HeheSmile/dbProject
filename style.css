@@ -156,7 +156,7 @@ body{
     color: black;
 }
 
-#insBtn{
+.insBtn{
     font-size: 20px;
     cursor: pointer;
     padding: 5px 95px;
@@ -171,7 +171,7 @@ body{
     border-radius: 10px;
 }
 
-#insBtn:hover{
+.insBtn:hover{
     background-color: rgb(89, 47, 255);
     color: rgb(0, 0, 0);
 }
