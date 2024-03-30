@@ -4,7 +4,10 @@ import {
     getAuth, 
     signInWithEmailAndPassword, 
     signInAnonymously,
-    onAuthStateChanged
+    onAuthStateChanged,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
 const firebaseConfig = {
@@ -22,7 +25,6 @@ const db = getDatabase();
 const authEmail = getAuth(app)
 const dbref = ref(db);
 //ref
-let nameBox = document.getElementById("nameBox");
 let passBox = document.getElementById("passBox");
 let emailBox = document.getElementById("emailBox");
 let form = document.getElementById("form");
@@ -40,11 +42,11 @@ signInWithEmailAndPassword(authEmail, emailBox.value, passBox.value)
                 }))
                 sessionStorage.setItem("user-creds", JSON.stringify(credentials.user));
                 if(snapshot.val().roleNo == "0"){
-                    window.location.href = ("./customer.html")
+                    window.location.href = ("../html/customer.html")
                 }
 
                 else if(snapshot.val().roleNo == "1"){
-                    window.location.href = ("./admin.html")
+                    window.location.href = ("../html/admin.html")
                 }
                 
             }
@@ -57,8 +59,26 @@ signInWithEmailAndPassword(authEmail, emailBox.value, passBox.value)
     })
 }
 
-
-
+//google sign in
+const loginGoogleBtn = document.getElementById('logInGoogleBtn')
+const provider = new GoogleAuthProvider(app);
+const authGoogle = getAuth(app)
+loginGoogleBtn.addEventListener('click', function(){
+signInWithPopup(authGoogle, provider)
+  .then((result, credentials) => {
+    const user = result.user;
+    sessionStorage.setItem("user-creds", JSON.stringify(user.email));
+    sessionStorage.setItem("user-info", JSON.stringify(user.displayName))
+    // const credential = GoogleAuthProvider.credentialFromResult(result);
+    
+    // window.location.href = ('../html/customer.html')
+    
+  }).
+  catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+})
 
 //log in anonymous
 const logInAnonBtn = document.getElementById("logInAnonBtn");
@@ -74,19 +94,7 @@ logInAnonBtn.addEventListener('click', event => {
     });
 })
 
-const auth = getAuth();
-onAuthStateChanged(auth, (user) => {
-if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/auth.user
-    const uid = user.uid;
-    // ...
-} else {
-    // User is signed out
-    // ...
-}
-console.log(user);
-});
+
 
 //assigns
 form.addEventListener("submit", signInUser);
