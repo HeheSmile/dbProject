@@ -1,13 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
+import { getDatabase, ref, get, child, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
 import {
     getAuth,
     signInWithEmailAndPassword,
-    signInAnonymously,
-    onAuthStateChanged,
     GoogleAuthProvider,
-    signInWithPopup,
-    signOut
+    signInWithPopup
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
 const firebaseConfig = {
@@ -22,7 +19,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase();
-const authEmail = getAuth(app)
+const auth = getAuth(app)
 const dbref = ref(db);
 //ref
 let passBox = document.getElementById("passBox");
@@ -31,8 +28,7 @@ let form = document.getElementById("form");
 
 let signInUser = evt => {
     evt.preventDefault();
-
-    signInWithEmailAndPassword(authEmail, emailBox.value, passBox.value)
+    signInWithEmailAndPassword(auth, emailBox.value, passBox.value)
         .then((credentials) => {
             get(child(dbref, 'userAuthList/' + credentials.user.uid)).then((snapshot) => {
                 if (snapshot.exists) {
@@ -61,29 +57,41 @@ let signInUser = evt => {
 //google sign in
 const loginGoogleBtn = document.getElementById('logInGoogleBtn')
 const provider = new GoogleAuthProvider(app);
-const authGoogle = getAuth(app)
 loginGoogleBtn.addEventListener('click', function () {
-    signInWithPopup(authGoogle, provider)
-        .then((result) => {
+    signInWithPopup(auth, provider)
+        .then((result, credentials) => {
             const user = result.user;
             sessionStorage.setItem("user-creds", JSON.stringify(user.email));
             sessionStorage.setItem("user-info", JSON.stringify(user.displayName))
+            set(ref(db, "userAuthList/" + credentials.user.uid), {
+                username: user.displayName,
+                email: user.email,
+                uid: credentials.user.uid,
+                roleNo: roleBox.value
+            })
             // const credential = GoogleAuthProvider.credentialFromResult(result);
             window.location.href = ('../html/customer.html')
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
+            console.log(error);
         });
 })
 
 //log in anonymous
 const logInAnonBtn = document.getElementById("logInAnonBtn");
 logInAnonBtn.addEventListener('click', event => {
-    const auth = getAuth();
-    signInAnonymously(auth)
-        .then(() => {
-            window.location.href = "../html/customer.html"
+    signInWithEmailAndPassword(auth, "anonymous@gmail.com", 123456)
+        .then((credentials) => {
+            get(child(dbref, 'userAuthList/' + credentials.user.uid))
+            .then((snapshot) => {
+                if (snapshot.exists) {
+                    sessionStorage.setItem("user-info", JSON.stringify(
+                        "Anonymous"
+                    ))
+                    sessionStorage.setItem("user-creds", JSON.stringify("Anonymous"));
+                    window.location.href = ("../html/customer.html")
+                }
+            })
         })
         .catch((error) => {
             const errorCode = error.code;
