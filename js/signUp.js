@@ -32,7 +32,7 @@ let RegisterUser = evt =>{
     createUserWithEmailAndPassword(auth, emailBox.value, passBox.value)
     .then((credentials)=>{
         console.log("User Created, Credentails: " + credentials);
-        return set(ref(db, "userAuthList/" + credentials.user.uid), {
+        return set(ref(db, "userAuthList/emailAuth/" + credentials.user.uid), {
             firstname: fnameBox.value,
             lastname: lnameBox.value,
             email: emailBox.value,

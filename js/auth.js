@@ -30,7 +30,7 @@ let signInUser = evt => {
     evt.preventDefault();
     signInWithEmailAndPassword(auth, emailBox.value, passBox.value)
         .then((credentials) => {
-            get(child(dbref, 'userAuthList/' + credentials.user.uid)).then((snapshot) => {
+            get(child(dbref, 'userAuthList/emailAuth/' + credentials.user.uid)).then((snapshot) => {
                 if (snapshot.exists) {
                     sessionStorage.setItem("user-info", JSON.stringify(
                         snapshot.val().firstname + " " + snapshot.val().lastname
@@ -59,16 +59,18 @@ const loginGoogleBtn = document.getElementById('logInGoogleBtn')
 const provider = new GoogleAuthProvider(app);
 loginGoogleBtn.addEventListener('click', function () {
     signInWithPopup(auth, provider)
-        .then((result, credentials) => {
+        .then((result) => {
             const user = result.user;
             sessionStorage.setItem("user-creds", JSON.stringify(user.email));
             sessionStorage.setItem("user-info", JSON.stringify(user.displayName))
-            set(ref(db, "userAuthList/" + credentials.user.uid), {
+            set(ref(db, "userAuthList/googleAuth/" + user.providerData[0].uid), {
                 username: user.displayName,
                 email: user.email,
-                uid: credentials.user.uid,
-                roleNo: roleBox.value
+                provider: user.providerData[0].providerId,
+                uid: user.providerData[0].uid,
+                roleNo: 0
             })
+            // console.log(user);
             // const credential = GoogleAuthProvider.credentialFromResult(result);
             window.location.href = ('../html/customer.html')
         })

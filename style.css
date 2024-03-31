@@ -1,5 +1,5 @@
 *{
-    color: white;
+    color: rgb(0, 0, 0);
     font-family: Verdana, sans-serif;
 }
 body,html{
@@ -119,15 +119,11 @@ body{
 
 /* login __ signup */
 
-.content{
+#root{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px;
-}
-
-.content h2{
-    font-size: 20px;
+    height: 100vh;
 }
 
 #title{
@@ -135,12 +131,18 @@ body{
 }
 .card{
     box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    background-color: rgb(0, 0, 0);
-    border-radius: 10px;
-    padding: 10px 50px 15px 50px;
-    color: rgb(89, 47, 255);
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 30%;
+    padding: 0px 0px 17px 0px;
+    margin: 90px 80px;
+}
+
+.card #form{
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .input{
@@ -159,20 +161,16 @@ body{
 .insBtn{
     font-size: 20px;
     cursor: pointer;
-    padding: 5px 95px;
-    background-color: rgba(0, 0, 0, 0.318);
-    color: rgb(255, 255, 255);
+    padding: 5px 20px;
+    background-color: rgba(4, 4, 4, 0.318);
+    color: rgb(0, 0, 0);
     text-transform: uppercase;
     font-weight: bold;
-    margin-top: 5px;
-    margin-bottom: 10px;
     border: none;
-    border: 1px solid white;
-    border-radius: 10px;
 }
 
 .insBtn:hover{
-    background-color: rgb(89, 47, 255);
+    background-color: rgb(122, 122, 122);
     color: rgb(0, 0, 0);
 }
 
@@ -183,21 +181,6 @@ body{
 
 #signUp:hover{
     color: rgb(89, 47, 255);
-}
-
-#log-out-button{
-    color: black;
-    background-color: rgb(89, 47, 255);
-    font-size: 45px;
-    border: 5px solid white;
-    border-radius: 20px;
-    padding: 10px;
-}
-
-#log-out-button:hover{
-    cursor: pointer;
-    color: white;
-    background-color: rgba(166, 162, 216, 0.603);
 }
 
 .change-button {

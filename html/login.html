@@ -4,9 +4,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../style.css">
 </head>
-<div class="card" id="card">
-    <form id="form">
-        <h1 id="title">Log In</h1>
+<div id="root">
+    <div class="card" id="card">
+        <form id="form">
+            <h1 id="title">Log In</h1>
             <div id="log-in">
                 <div id="email" class="input">
                     <h2>Email</h2>
@@ -17,16 +18,20 @@
                     <h2>Password</h2>
                     <input type="password" id="passBox" placeholder="Password" required>
                 </div>
-            <button type="submit" class="insBtn" id="insBtn">Log In</button>
-            <br>
-            <button type="submit" class="insBtn" id="logInAnonBtn">Log In Anonymous</button>
-            <br>
-            <button type="submit" class="insBtn" id="logInGoogleBtn">Log In Google</button>
-            <br>
-        <a href="./signUp.html" id="login">Sign Up</a>
-    </form>
-    
+            </div>
+            
+                <button type="submit" class="insBtn" id="insBtn">Log In</button>
+                <br>
+                <button type="submit" class="insBtn" id="logInAnonBtn">Log In Anonymous</button>
+                <br>
+                <button type="submit" class="insBtn" id="logInGoogleBtn">Log In Google</button>
+                <br>
+            <a href="./signUp.html" id="login">Sign Up</a>
+        </form>
+        
+    </div>
 </div>
+
 </body>
 <script src="../js/auth.js" type="module">
 

@@ -4,37 +4,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../style.css">
 </head>
-<div class="card" id="card">
-    <form id="form">
-        <h1 id="title">Sign Up</h1>
-            <div id="log-in">
-
-                <div id="email" class="input">
-                    <h2>First name</h2>
-                    <input type="text" id="fnameBox" placeholder="First Name" required>
+<div id="root">
+    <div class="card" id="card">
+        <form id="form">
+            <h1 id="title">Sign Up</h1>
+                <div id="log-in">
+    
+                    <div id="email" class="input">
+                        <h2>First name</h2>
+                        <input type="text" id="fnameBox" placeholder="First Name" required>
+                    </div>
+    
+                    <div id="pass" class="input">
+                        <h2>Second Name</h2>
+                        <input type="text" id="lnameBox" placeholder="Last Name" required>
+                    </div>
+    
+                    <div id="email" class="input">
+                        <h2>Email</h2>
+                        <input type="email" id="emailBox" placeholder="Email" required>
+                    </div>
+    
+                    <div id="pass" class="input">
+                        <h2>Password</h2>
+                        <input type="password" id="passBox" placeholder="Password" required>
+                    </div>
+    
+                    <div id="role" class="input">
+                        <input type="number" id="roleBox" value="0" style="display: none;">
+                    </div>
                 </div>
-
-                <div id="pass" class="input">
-                    <h2>Second Name</h2>
-                    <input type="text" id="lnameBox" placeholder="Last Name" required>
-                </div>
-
-                <div id="email" class="input">
-                    <h2>Email</h2>
-                    <input type="email" id="emailBox" placeholder="Email" required>
-                </div>
-
-                <div id="pass" class="input">
-                    <h2>Password</h2>
-                    <input type="password" id="passBox" placeholder="Password" required>
-                </div>
-
-                <div id="role" class="input">
-                    <input type="number" id="roleBox" value="0" style="display: none;">
-                </div>
-            <button type="submit" class="insBtn" id="insBtn">Sign Up</button>
-        <a href="./login.html" id="login">Log In</a>
-    </form>
+                <button type="submit" class="insBtn" id="insBtn">Sign Up</button>
+            <a href="./login.html" id="login">Log In</a>
+        </form>
+    </div>
 </div>
 </body>
 <script src="../js/signUp.js" type="module">
