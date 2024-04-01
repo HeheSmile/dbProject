@@ -33,7 +33,7 @@ let signInUser = evt => {
             get(child(dbref, 'userAuthList/' + credentials.user.uid)).then((snapshot) => {
                 if (snapshot.exists) {
                     sessionStorage.setItem("user-info", JSON.stringify(
-                        snapshot.val().firstname + " " + snapshot.val().lastname
+                        snapshot.val().username
                     ))
                     sessionStorage.setItem("user-creds", JSON.stringify(credentials.user.email));
                     if (snapshot.val().roleNo == "0") {

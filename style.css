@@ -1,195 +1,171 @@
-*{
-    color: rgb(0, 0, 0);
-    font-family: Verdana, sans-serif;
+* {
+  color: rgb(0, 0, 0);
+  font-family: Verdana, sans-serif;
 }
-body,html{
-    margin: 0px;
-    width: 100%;
+body,
+html {
+  margin: 0px;
+  width: 100%;
 }
 
-html{
-    scroll-behavior: smooth;
+html {
+  scroll-behavior: smooth;
 }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
-  
+
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 0px grey;
-    border-radius: 10px;
+  box-shadow: inset 0 0 0px grey;
+  border-radius: 10px;
 }
-   
+
 ::-webkit-scrollbar-thumb {
-    background: gray;
-    border-radius: 10px;
+  background: gray;
+  border-radius: 10px;
 }
-  
+
 ::-webkit-scrollbar-thumb:hover {
-    background: rgb(83, 83, 83); 
+  background: rgb(83, 83, 83);
 }
 
-body{
-    background-color: black;
+body {
+  background-color: rgb(255, 255, 255);
 }
 
-.high-light{
-    font-size: 25px;
-    background-color: white;
-    color: black;
-    padding: 5px 5px;
-    font-weight: 600;
+.high-light {
+  font-size: 25px;
+  background-color: white;
+color: black;
+  padding: 5px 5px;
+  font-weight: 600;
 }
 
-.content h3{
-    font-size: 22px;
-    line-height: 1.5;
+.content h3 {
+  font-size: 22px;
+  line-height: 1.5;
 }
 
-.content h2{
-    font-size: 65px;
-    text-transform: uppercase;
+.content h2 {
+  font-size: 65px;
+  text-transform: uppercase;
 }
 /* top menu */
 .text-block {
-    position: absolute;
-    font-size: 40px;
-    bottom: 120px;
-    left: 45px;
-    text-transform: uppercase;
-    color: white;
-    padding-left: 20px;
-    padding-right: 20px;
-    line-height: 1.6 ;
-  }
-
-.nav{
-    background: linear-gradient(rgb(0, 0, 0) 20%, rgb(255, 255, 255, 0));
-    display: flex;
-    font-family: Verdana, sans-serif;
+  position: absolute;
+  font-size: 40px;
+  bottom: 120px;
+  left: 45px;
+  text-transform: uppercase;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  line-height: 1.6;
 }
 
-.nav img{
-    width: 11%;
-    height: 100%;
-    padding: 15px;
-    cursor: pointer;
-}
-
-.nav .nav-item{
-    color: whitesmoke;
-    text-decoration: none;
-    text-transform: uppercase;
-    display: block;
-    font-size: 20px;
-    padding: 28px;
-}
-
-.nav .nav-item:hover{
-    color: rgb(108, 112, 112);
-}
 /* log in  */
-/* search bar */
-#search-bar{
-    padding-top: 1.5%;
-    padding-left: 1.5%;
-    display: flex;
-}
-
-.search-icon {
-    cursor: pointer;
-    color: white;
-}
-
-.search-icon:hover {
-    color: rgb(89, 47, 255);
-}
-
-#search-inp {
-    font-size: 20px;
-    border: 0;
-    outline: 0;
-    padding: 3px 23px 3px 20px;
-    background: transparent;
-    height: 20px;
-    color: white;
-    border-bottom: 1px solid white;
-}
 
 /* login __ signup */
 
-#root{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-#title{
-    text-align: center;
+#title {
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
 }
-.card{
-    box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    background-color: rgb(255, 255, 255);
-    border: 1px solid black;
-    border-radius: 20px;
-    width: 30%;
-    padding: 0px 0px 17px 0px;
-    margin: 90px 80px;
-}
-
-.card #form{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.card {
+  box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  width: 30%;
+  padding: 20px 0px 17px 0px;
+  margin: 90px 80px;
 }
 
-.input{
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
+.card #form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.input input{
-    border: 0px;
-    border-bottom: 4px solid rgb(174, 156, 248);
-    background-color: rgb(255, 255, 255);
-    color: black;
+.input {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
-.insBtn{
-    font-size: 20px;
-    cursor: pointer;
-    padding: 5px 20px;
-    background-color: rgba(4, 4, 4, 0.318);
-    color: rgb(0, 0, 0);
-    text-transform: uppercase;
-    font-weight: bold;
-    border: none;
+.input input {
+  border: 0px;
+  border-bottom: 3px solid rgb(174, 156, 248);
+  background-color: rgb(255, 255, 255);
+  color: black;
+  font-size: 15px;
 }
 
-.insBtn:hover{
-    background-color: rgb(122, 122, 122);
-    color: rgb(0, 0, 0);
+.input h2 {
+  font-size: 20px;
+  font-weight: bold;
 }
 
-#signUp{
-    text-decoration: none;
-    color: white;
+.insBtn {
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px 20px;
+  background-color: rgba(4, 4, 4, 0.318);
+  color: rgb(0, 0, 0);
+  text-transform: uppercase;
+  font-weight: bold;
+  border: none;
+  margin: 5px 0px;
 }
 
-#signUp:hover{
-    color: rgb(89, 47, 255);
+.insBtn:hover {
+  background-color: rgb(122, 122, 122);
+  color: rgb(0, 0, 0);
+}
+
+#regBtn {
+  margin: 0px 0px 25px 0px;
+}
+
+#signUp {
+  text-decoration: none;
+  color: white;
+}
+
+#signUp:hover {
+  color: rgb(89, 47, 255);
 }
 
 .change-button {
-    color: white;
-    background-color: black;
-    margin-left: 10px;
+  color: white;
+  background-color: black;
+  margin-left: 10px;
 }
 
-.change-button:hover{
-    color: black;
-    background-color: white;
+.change-button:hover {
+  color: black;
+  background-color: white;
+}
+
+#login {
+  text-decoration: none;
+  color: black;
+}
+
+#login:hover {
+  color: gray;
+}
+
+.line {
+  color: black;
+  padding: 0px 20%;
 }
