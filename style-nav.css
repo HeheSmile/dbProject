@@ -36,17 +36,17 @@
   }
   
   #nav-bar {
-    list-style-type: none;
     display: flex;
     overflow: hidden;
     align-items: center;
     justify-content: center;
+    margin-right: 40px;
   }
 
   #nav-items{
     display: flex;
-    justify-content: space-around;
     align-items: center;
+    padding: 10px 40px;
   }
 
   .nav-item{
@@ -54,23 +54,36 @@
     color: rgb(0, 0, 0);
     font-size: 20px;
     text-align: center;
-    padding: 14px 50px;
+    border-bottom: 2px solid white;
+    padding: 13px 40px 15px 40px;
+    transition: all 0.5s ease;
   }
 
   .nav-item:hover{
+    transition: 0.5s;
     background-color: grey;
+    border-bottom: 2px solid black;
   }
 
   #signOutBtn{
     color: rgb(255, 255, 255);
     margin: 0px;
-    font-size: 20px;
-    border: 2px solid black;
+    font-size: 18px;
     border-radius: 5px;
     background-color: black;
+    padding: 5px;
+    transition: all 1s ease;
   }
 
   #signOutBtn:hover{
+    transition: 0.5s;
+    border-radius: 25px;
     color: rgb(0, 0, 0);
     background-color: rgb(252, 252, 252);
+  }
+
+  #nav-bar img{
+    width: 45px;
+    height: 54px;
+    margin-left: 45px;
   }

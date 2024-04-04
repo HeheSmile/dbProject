@@ -11,19 +11,26 @@
   </head>
   <div id="root">
     <body>
+      
     <div id="nav-bar">
+      <img src="../assets/Scribble.png" alt="No Image">
       <div id="nav-items">
           <a href="#" class="nav-item">Home</a>
-          <a href="#" class="nav-item">News</a>
-          <a href="#" class="nav-item">Contact</a>
           <a href="#" class="nav-item">About</a>
+          <a href="#" class="nav-item">Contact</a>
+          <a href="#" class="nav-item">Community</a>
+          <a href="#" class="nav-item">
+            <i class="fa-solid fa-circle-user"></i> <span id="greet"></span>
+          </a>
       </div>
-      <button id="signOutBtn">Sign Out</button>
+      <div id="buttons">
+        <button id="signOutBtn">Sign Out</button>
+      </div>
+      
     </div>
     
 
     <h2 id="msg"></h2>
-    <h2 id="greet"></h2>
   </div>
   
   </body>
@@ -74,7 +81,7 @@
 
       else{
         msgHead.innerText = ` User with email "${UserCreds}" logged in` ;
-        greet.innerText =  `Welcome ${UserInfo}`
+        greet.innerText =  `${UserInfo}`
       }
     }
   const auth = getAuth();
