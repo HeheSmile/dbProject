@@ -20,7 +20,7 @@
           <a href="#" class="nav-item">Contact</a>
           <a href="#" class="nav-item">Community</a>
           <a href="#" class="nav-item">
-            <i class="fa-solid fa-circle-user"></i> <span id="greet"></span>
+            <i class="fa-solid fa-circle-user"></i> <span id="user"></span>
           </a>
       </div>
       <div id="buttons">
@@ -28,8 +28,8 @@
       </div>
       
     </div>
-    
-
+    <h2 style="text-align: center;">Welcome</h2>
+    <h2 id="greet"></h2>
     <h2 id="msg"></h2>
   </div>
   
@@ -65,6 +65,7 @@
     let UserInfo = JSON.parse(sessionStorage.getItem("user-info"))
 
     let msgHead = document.getElementById("msg");
+    let user = document.getElementById("user");
     let greet = document.getElementById("greet")
     let signOutBtn = document.getElementById("signOutBtn");
 
@@ -80,7 +81,8 @@
       }
 
       else{
-        msgHead.innerText = ` User with email "${UserCreds}" logged in` ;
+        msgHead.innerText = `${UserCreds}` ;
+        user.innerText = `${UserInfo}`
         greet.innerText =  `${UserInfo}`
       }
     }

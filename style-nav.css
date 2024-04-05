@@ -86,3 +86,11 @@
     width: 50px;
     margin-right: 10px;
   }
+
+  #greet{
+    text-align: center;
+  }
+
+  #msg{
+    text-align: center;
+  }
