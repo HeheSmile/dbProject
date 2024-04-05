@@ -21,7 +21,6 @@ const auth = getAuth(app)
 
 //ref
 let fnameBox = document.getElementById("fnameBox");
-let lnameBox = document.getElementById("lnameBox");
 let passBox = document.getElementById("passBox");
 let emailBox = document.getElementById("emailBox");
 let roleBox = document.getElementById("roleBox");
@@ -33,7 +32,7 @@ let RegisterUser = evt => {
         .then((credentials) => {
             console.log("User Created, Credentails: " + credentials);
             return set(ref(db, "userAuthList/" + credentials.user.uid), {
-                username: fnameBox.value + " " + lnameBox.value,
+                username: fnameBox.value,
                 email: emailBox.value,
                 password: passBox.value,
                 uid: credentials.user.uid,
