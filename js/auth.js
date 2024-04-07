@@ -37,7 +37,7 @@ let signInUser = evt => {
                     ))
                     sessionStorage.setItem("user-creds", JSON.stringify(credentials.user.email));
                     if (snapshot.val().roleNo == "0") {
-                        window.location.href = ("../html/customer.html")
+                        window.location.href = ("../html/home.html")
                     }
 
                     else if (snapshot.val().roleNo == "1") {
@@ -70,7 +70,7 @@ loginGoogleBtn.addEventListener('click', function () {
                 uid: user.providerData[0].uid,
                 roleNo: 0
             });
-            window.location.href = ('../html/customer.html');
+            window.location.href = ('../html/home.html');
         })
         .catch((error) => {
             console.log(error);
@@ -89,7 +89,7 @@ logInAnonBtn.addEventListener('click', event => {
                         "Anonymous"
                     ))
                     sessionStorage.setItem("user-creds", JSON.stringify("Anonymous"));
-                    window.location.href = ("../html/customer.html")
+                    window.location.href = ("../html/home.html")
                 }
             })
         })
