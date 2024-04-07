@@ -25,6 +25,7 @@ let passBox = document.getElementById("passBox");
 let emailBox = document.getElementById("emailBox");
 let roleBox = document.getElementById("roleBox");
 let form = document.getElementById("form");
+let message = document.getElementById("message")
 
 let RegisterUser = evt => {
     evt.preventDefault();
@@ -41,12 +42,12 @@ let RegisterUser = evt => {
         })
 
         .then(() => {
-            alert("Successfully");
+            message.innerHTML = "Successfully";
             location.href = "./login.html";
         })
         .catch((error) => {
-            alert(error.message);
-            console.log(error.code);
+            message.innerHTML = error.message;
+            message.style.color = "red"
             console.log(error.message);
         })
 }
