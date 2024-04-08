@@ -1,0 +1,118 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+  }
+  textarea {
+    outline: none;
+    border: 1px solid gray !important;
+  }
+  .maincreate {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 90px 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 12px;
+  }
+  #container {
+    align-items: flex-start;
+  }
+
+  .progress{
+    width: 100%;
+  }
+  .container {
+    padding: 0px;
+  }
+  #uploadedmssage {
+    display: none;
+  }
+  .createposttitle {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  #postdata {
+    font-size: 15px;
+    outline: none;
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #f0f2f5;
+  }
+  #imageforpost {
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 12px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50px;
+    color: gray;
+  }
+  #uploadbtnicon {
+    font-size: 25px;
+  }
+  #submitbutton {
+    display: flex;
+    justify-content: flex-end;
+  }
+  #createposticon {
+    width: 180px;
+    padding: 5px 0px;
+    border: none;
+    background-color: #3360f9;
+    cursor: pointer;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 5px;
+    color: white;
+  }
+  .createposticon {
+    width: 180px;
+    padding: 5px 0px;
+    border: none;
+    background-color: #3360f9;
+    cursor: pointer;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 5px;
+    color: white;
+  }
+  #postfiles {
+    display: none;
+  }
+  
+  #textareaupdate {
+    font-size: 15px;
+    outline: none;
+    width: 100%;
+    padding: 7px;
+    border: 2px solid rgb(225, 221, 221) !important;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  #textarea {
+    font-size: 15px;
+    outline: none;
+    width: 100%;
+    padding: 7px;
+    border: 2px solid rgb(225, 221, 221) !important;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  p {
+    margin-bottom: 0px !important;
+  }
+  @media only screen and (max-width: 310px) {
+    #imageforpost {
+      font-size: 4vw;
+    }
+    #uploadbuttonicon {
+      width: 15px;
+    }
+  }

@@ -61,16 +61,31 @@ loginGoogleBtn.addEventListener('click', function () {
     signInWithPopup(auth, provider)
         .then((result) => {
             const user = result.user;
-            sessionStorage.setItem("user-creds", JSON.stringify(user.email));
-            sessionStorage.setItem("user-info", JSON.stringify(user.displayName))
-            set(ref(db, "userAuthList/" + user.providerData[0].uid), {
-                username: user.displayName,
-                email: user.email,
-                provider: user.providerData[0].providerId,
-                uid: user.providerData[0].uid,
-                roleNo: 0
-            });
-            window.location.href = ('../html/home.html');
+            
+            get(child(dbref, "userAuthList/" + user.providerData[0].uid)).then((snapshot) => {
+                if(snapshot.exists){
+                    sessionStorage.setItem("user-creds", JSON.stringify(user.email));
+                    sessionStorage.setItem("user-info", JSON.stringify(user.displayName))
+                    if (snapshot.val().roleNo == "0") {
+                        window.location.href = ("../html/home.html")
+                    }
+
+                    else if (snapshot.val().roleNo == "1") {
+                        window.location.href = ("../html/admin.html")
+                    }
+                }
+
+                else{
+                    set(ref(db, "userAuthList/" + user.providerData[0].uid), {
+                        username: user.displayName,
+                        email: user.email,
+                        provider: user.providerData[0].providerId,
+                        uid: user.providerData[0].uid,
+                        roleNo: 0
+                    });
+                    window.location.href = ('../html/home.html')
+                }
+            })
         })
         .catch((error) => {
             console.log(error);
