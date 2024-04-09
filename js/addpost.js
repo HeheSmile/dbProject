@@ -25,7 +25,6 @@ let url = ""
 let fileType = ""
 let done = document.getElementById("done")
 let uid
-let uploadBtn = document.getElementById("uploadFiles")
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -47,7 +46,7 @@ onAuthStateChanged(auth, (user) => {
     currentUser = user
 })
 
-function uploadimg(event){
+const uploadimg = (event) => {
     fileType = event.target.files[0].type;
     const storage = getStorage();
     const uploadTask = storage().ref().child(`posts/${event.target.files[0]}`)
