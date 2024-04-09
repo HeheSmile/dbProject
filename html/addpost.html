@@ -38,10 +38,11 @@
             </label>
 
             <input 
+                id="uploadFiles"
                 type="file" id="postfiles" 
-                style="visibility: hidden;" 
-                onchange= "uploadimg(event)"
-            >
+                style="visibility: hidden;"
+                onchange="uploadimg(event)"
+            />
             <br><br>
 
             <div class="progress" id="progressDiv" style="display: none;">
@@ -64,7 +65,6 @@
             </div>
         </div>
       </div>
-
-      <script src="../js/addpost.js" type="module"></script>
 </body>
+<script src="../js/addpost.js" type="module"></script>
 </html>
