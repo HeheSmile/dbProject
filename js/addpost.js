@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
 import { getDatabase, get, child, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 const firebaseConfig = {
     apiKey: "AIzaSyApxMylzZxo4C_p_OAoUuh5B5RnBrUpBCs",
     authDomain: "firedb1-4914e.firebaseapp.com",
@@ -13,9 +14,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getDatabase();
-const auth = getAuth(app)
-const dbref = ref(db);
+const db = getFirestore();
+const auth = getAuth()
 
 let postValue = document.getElementById("textarea")
 let progressDiv = document.getElementById("progressDiv")
@@ -71,3 +71,22 @@ const uploadimg = (event) => {
         }
     );
 }
+    var date = new Date().toLocaleDateString();
+
+    function createPost(){
+        if(postValue !== "" || url !== ""){
+            firebase.firestore().collection("posts").add({
+                postvalue: postValue.value,
+                uid: currentUser.uid,
+                url: url,
+                filetype: fileType,
+                like: [],
+                dislikes: [],
+                comments: [],
+                Date: `${d}`
+            })
+            .then((res) => {
+                firebase.firestore()
+            })
+        }
+    }
