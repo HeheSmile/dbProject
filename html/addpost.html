@@ -9,112 +9,16 @@
     <link rel="icon" href="../assets/Scribble.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Create Post</title>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getDatabase, get, child, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-const firebaseConfig = {
-    apiKey: "AIzaSyApxMylzZxo4C_p_OAoUuh5B5RnBrUpBCs",
-    authDomain: "firedb1-4914e.firebaseapp.com",
-    projectId: "firedb1-4914e",
-    storageBucket: "firedb1-4914e.appspot.com",
-    messagingSenderId: "274355745795",
-    appId: "1:274355745795:web:7bd9613bd9dcdb8f918a36"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore();
-const auth = getAuth()
-
-let postValue = document.getElementById("textarea")
-let progressDiv = document.getElementById("progressDiv")
-let progressBar = document.getElementById("progressBar")
-let currentUser = ""
-let url = ""
-let fileType = ""
-let done = document.getElementById("done")
-let uid
-
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        if (user.emailVerified) {
-            setTimeout(() => {
-                uid = user.uid
-            }, 1000);
-        }
-        else {
-            // login
-            setTimeout(() => {
-                window.location.assign("../html/login.html");
-            }, 1000);
-        }
-    }
-});
-
-onAuthStateChanged(auth, (user) => {
-    currentUser = user
-})
-
-const uploadimg = (event) => {
-    fileType = event.target.files[0].type;
-    const storage = getStorage();
-    const uploadTask = storage().ref().child(`posts/${event.target.files[0]}`)
-
-    uploadTask.on('state_changed',
-        (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            var uploadPercentage = Math.round(progress)
-            progressDiv.style.display = "block"
-            progressBar.style.width = `${uploadPercentage}%`
-            progressBar.innerHTML = `${uploadPercentage}%`
-        },
-        (error) => {
-            console.log(error.message);
-        },
-        () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                url = downloadURL;
-                done.style.display = "block"
-                progressDiv.style.display = "none"
-            });
-        }
-    );
-}
-    var date = new Date().toLocaleDateString();
-
-    function createPost(){
-        if(postValue !== "" || url !== ""){
-            firebase.firestore().collection("posts").add({
-                postvalue: postValue.value,
-                uid: currentUser.uid,
-                url: url,
-                filetype: fileType,
-                like: [],
-                dislikes: [],
-                comments: [],
-                Date: `${d}`
-            })
-            .then((res) => {
-                firebase.firestore()
-            })
-        }
-    }
-    </script>
 </head>
 <body>
     <div id="root">
-        <body>
-          
         <div id="nav-bar">
           <img src="../assets/Scribble.png" alt="No Image">
           <div id="nav-items">
               <a href="../html/home.html" class="nav-item"><i class="fa-solid fa-house"></i></a>
               <a href="../html/allfriends.html" class="nav-item"><i class="fa-solid fa-users icons"></i></a>
               <a href="../html/addpost.html" class="nav-item"><i class="fa-solid fa-circle-plus icons"></i></a>
-              <a href="../html/account.html" class="nav-item">
+              <a href="../html/userdetail.html" class="nav-item">
                 <i class="fa-solid fa-circle-user"></i> </span>
               </a>
           </div>
@@ -125,41 +29,43 @@ const uploadimg = (event) => {
 
         <div class="maincreate">
             <p class="createposttitle">Create Post</p>
-            <textarea id="textarea" cols="50" rows="5" placeholder="Type here"></textarea>
-            <label for="postfiles" id="imageforpost">
+            <textarea id="textarea" cols="50" rows="5" placeholder="Type here" style="color: black;"></textarea>
+            <label for="postFiles" id="imageforpost">
                 Upload image or video
                 <i class="fa-solid fa-upload" id="uploadbtnicon"></i>
             </label>
-
             <input 
-                type="file" id="postfiles" 
+                type="file" id="postFiles"
                 style="visibility: hidden;"
-                onchange="uploadimg(event)"
+                accept="png jpeg"
             />
             <br><br>
-
+            <div id="imgPost" style="display: flex; align-items: center; justify-content: center;">
+                <img src="" id="myImg" alt="" style="width: 80%;">
+            </div>
+            <p id="fileText" style=" font-size: 15px;"></p><p id="extLab"></p>
             <div class="progress" id="progressDiv" style="display: none;">
                 <div class="progressbar" 
                     role="progressbar" 
                     aria-valuenow="25" 
                     aria-valuemin="0" 
-                    aria-valuemax="100" 
+                    aria-valuemax="100"
                     id="progressBar">
                 </div>
             </div>
-
             <p id="done" style="color: green; font-size: 15px; display: none;"></p>
 
             <div id="uploadmessage">
                 <p style="color: green; font-size: 15px; display: none;">Uploaded</p>
             </div>
             <div id="submitbutton" style="margin-top: 10px;" class="col-12">
-                <a id="createposticon" class="col-7" style="text-decoration: none;">Post</a>
+                <a id="createPostIcon" class="col-7" style="text-decoration: none;">Post</a>
             </div>
         </div>
       </div>
 </body>
-<!-- <script src="../js/addpost.js" type="module"></script> -->
+<script src="../js/addpost.js" type="module"></script>
+
 <script>
     let signOutBtn = document.getElementById("signOutBtn");
     let SignOut = () =>{
@@ -167,4 +73,5 @@ const uploadimg = (event) => {
     }
     signOutBtn.addEventListener('click', SignOut);
 </script>
+
 </html>

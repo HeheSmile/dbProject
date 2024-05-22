@@ -3,6 +3,10 @@
     margin: 0;
     font-family: "Roboto", sans-serif;
   }
+
+  body,html{
+    background-color: black;
+  }
   textarea {
     outline: none;
     border: 1px solid gray !important;
@@ -18,8 +22,9 @@
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 12px;
   }
-  #container {
+  #root {
     align-items: flex-start;
+    background-color: black;
   }
 
   .progress{
@@ -34,6 +39,7 @@
   .createposttitle {
     font-size: 15px;
     font-weight: 600;
+    background-color: white;
   }
   #postdata {
     font-size: 15px;
@@ -41,6 +47,14 @@
     width: 100%;
     padding: 7px;
     border: 1px solid #f0f2f5;
+  }
+
+  #imgPost{
+    background-color: white;
+  }
+
+  #imgPost #myImg{
+    background-color: white;
   }
   #imageforpost {
     width: 100%;
@@ -50,20 +64,23 @@
     padding: 10px;
     cursor: pointer;
     border-radius: 50px;
-    color: gray;
+    color: rgb(0, 0, 0);
   }
   #uploadbtnicon {
     font-size: 25px;
+    color: black;
+    background-color: white;
   }
   #submitbutton {
     display: flex;
     justify-content: flex-end;
+    background-color: white;
   }
-  #createposticon {
+  #createPostIcon {
     width: 180px;
     padding: 5px 0px;
     border: none;
-    background-color: #3360f9;
+    background-color: #7200b4;
     cursor: pointer;
     text-align: center;
     font-size: 15px;
@@ -71,7 +88,7 @@
     border-radius: 5px;
     color: white;
   }
-  .createposticon {
+  .createPostIcon {
     width: 180px;
     padding: 5px 0px;
     border: none;
@@ -104,6 +121,7 @@
     border: 2px solid rgb(225, 221, 221) !important;
     border-radius: 10px;
     margin-bottom: 10px;
+    background-color: white;
   }
   p {
     margin-bottom: 0px !important;

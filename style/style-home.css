@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    color: white;
+}
+  body, html{
+    width: 100%;
+    height: 100%;
+    background-color: black;
+}
+
+#showposts {
+  height: auto;
+  max-height: 100%;
+  width: 100% !important;
+  overflow: auto;
+}
+
+.container{
+  padding: 40px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reactDiv{
+  width: 50%;
+  display: flex;
+  justify-content: left;
+}
+
+.reactDiv > i{
+  padding-left: 20px;
+  font-size: 25px;
+  color: white;
+  transition: all 0.5s ease;
+}
+
+.reactDiv > i:hover{
+  transition: 0.5s;
+  cursor: pointer;
+  color: red;
+}
+
+.reactDiv > i > .reactArray{
+  color: white;
+  position: absolute;
+}
+
+.container .imgContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.imgContainer .postImg{
+  min-width: 10%;
+  max-width: 35%;
+  align-items: center;
+}
+
+.textDiv{
+  width: 50%;
+}
+
+.textDiv .postDate{
+  color: rgb(198, 198, 198);
+}
+
+.textDiv .userFav{
+  width: 15%;
+  border: 2px solid white;
+  border-radius: 100px;
+}
+
+.textDiv .userInfo{
+  display: flex;
+  align-items: center;
+}
+
+.textDiv .userInfo .userNamePost{
+  padding-left: 15px;
+  position: relative;
+  top: 5px;
+  font-size: 25px;
+}

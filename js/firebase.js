@@ -1,12 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import {
-    getDatabase,
-    ref,
-    set,
-} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-import { getAuth, 
-    createUserWithEmailAndPassword, 
-    onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyApxMylzZxo4C_p_OAoUuh5B5RnBrUpBCs",
     authDomain: "firedb1-4914e.firebaseapp.com",

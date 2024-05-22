@@ -36,9 +36,11 @@ let signInUser = evt => {
                         snapshot.val().username
                     ))
                     sessionStorage.setItem("user-creds", JSON.stringify(credentials.user.email));
+                    sessionStorage.setItem("user-uid", JSON.stringify(credentials.user.uid))
                     if (snapshot.val().roleNo == "0") {
                         window.location.href = ("../html/home.html")
                     }
+                    
 
                     else if (snapshot.val().roleNo == "1") {
                         window.location.href = ("../html/admin.html")
@@ -66,6 +68,8 @@ loginGoogleBtn.addEventListener('click', function () {
                 if(snapshot.exists){
                     sessionStorage.setItem("user-creds", JSON.stringify(user.email));
                     sessionStorage.setItem("user-info", JSON.stringify(user.displayName))
+                    sessionStorage.setItem("user-uid", JSON.stringify(user.providerData[0].uid))
+
                     if (snapshot.val().roleNo == "0") {
                         window.location.href = ("../html/home.html")
                     }
@@ -81,7 +85,11 @@ loginGoogleBtn.addEventListener('click', function () {
                         email: user.email,
                         provider: user.providerData[0].providerId,
                         uid: user.providerData[0].uid,
-                        roleNo: 0
+                        roleNo: 0,
+                        date: `${d}`,
+                        profilePicture: "",
+                        coverPicture: "",
+                        description: ""
                     });
                     window.location.href = ('../html/home.html')
                 }
@@ -93,25 +101,26 @@ loginGoogleBtn.addEventListener('click', function () {
 })
 
 //log in anonymous
-const logInAnonBtn = document.getElementById("logInAnonBtn");
-logInAnonBtn.addEventListener('click', event => {
-    signInWithEmailAndPassword(auth, "anonymous@gmail.com", 123456)
-        .then((credentials) => {
-            get(child(dbref, 'userAuthList/' + credentials.user.uid))
-            .then((snapshot) => {
-                if (snapshot.exists) {
-                    sessionStorage.setItem("user-info", JSON.stringify(
-                        "Anonymous"
-                    ))
-                    sessionStorage.setItem("user-creds", JSON.stringify("Anonymous"));
-                    window.location.href = ("../html/home.html")
-                }
-            })
-        })
-        .catch((error) => {
-            console.log(error.message);
-        });
-})
+// const logInAnonBtn = document.getElementById("logInAnonBtn");
+// logInAnonBtn.addEventListener('click', event => {
+//     signInWithEmailAndPassword(auth, "anonymous@gmail.com", 123456)
+//         .then((credentials) => {
+//             get(child(dbref, 'userAuthList/' + credentials.user.uid))
+//             .then((snapshot) => {
+//                 if (snapshot.exists) {
+//                     snapshot.emailVerified = true;
+//                     sessionStorage.setItem("user-info", JSON.stringify(
+//                         "Anonymous"
+//                     ))
+//                     sessionStorage.setItem("user-creds", JSON.stringify("Anonymous"));
+//                     window.location.href = ("../html/home.html")
+//                 }
+//             })
+//         })
+//         .catch((error) => {
+//             console.log(error.message);
+//         });
+// })
 
 
 

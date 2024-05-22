@@ -1,10 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import {
-    getDatabase,
-    ref,
-    set,
-} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import {getDatabase, ref, set,} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getFirestore, getDocs, setDoc, doc, collection, addDoc} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 const firebaseConfig = {
     apiKey: "AIzaSyApxMylzZxo4C_p_OAoUuh5B5RnBrUpBCs",
     authDomain: "firedb1-4914e.firebaseapp.com",
@@ -17,6 +14,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase();
+const dbStore = getFirestore()
 const auth = getAuth(app)
 
 //ref
@@ -31,25 +29,39 @@ let RegisterUser = evt => {
     evt.preventDefault();
     createUserWithEmailAndPassword(auth, emailBox.value, passBox.value)
         .then((credentials) => {
+            var d = new Date().toLocaleDateString();
             console.log("User Created, Credentails: " + credentials);
-            return set(ref(db, "userAuthList/" + credentials.user.uid), {
+            set(ref(db, "userAuthList/" + credentials.user.uid), {
                 username: fnameBox.value,
                 email: emailBox.value,
                 password: passBox.value,
                 uid: credentials.user.uid,
-                roleNo: roleBox.value
-            })
+                roleNo: roleBox.value,
+                date: `${d}`,
+                ProfilePicture: "",
+                CoverPicture: "",
+                Description: ""
+
+            }).then(() =>{
+                message.innerHTML = "Account was created successfully";
+                message.style.color = "green";
+                sendEmailVerification(auth.currentUser)
+                            .then(() => {
+                                setTimeout(()=>{
+                                    window.location.assign("../html/login.html")
+                                },1000)
+                            })
+            }) 
+            
         })
 
-        .then(() => {
-            message.innerHTML = "Successfully";
-            location.href = "./login.html";
-        })
         .catch((error) => {
             message.innerHTML = error.message;
             message.style.color = "red"
             console.log(error.message);
         })
 }
+
+
 //assigns
 form.addEventListener("submit", RegisterUser);

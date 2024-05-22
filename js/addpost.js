@@ -1,8 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getDatabase, get, child, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
+import { getStorage, ref as sRef ,uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getDatabase, get, child, set, ref as refDB } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
 const firebaseConfig = {
     apiKey: "AIzaSyApxMylzZxo4C_p_OAoUuh5B5RnBrUpBCs",
     authDomain: "firedb1-4914e.firebaseapp.com",
@@ -14,8 +13,12 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore();
+const realdb = getDatabase();
+const dbref = refDB(realdb)
 const auth = getAuth()
+
+const createPostBtn = document.getElementById("createPostIcon")
+const uploadFilesBtn = document.getElementById("postFiles")
 
 let postValue = document.getElementById("textarea")
 let progressDiv = document.getElementById("progressDiv")
@@ -26,12 +29,20 @@ let fileType = ""
 let done = document.getElementById("done")
 let uid
 
+let myImg = document.getElementById("myImg")
+var extLab = document.getElementById("extLab");
+var fileItem;
+var fileText = document.getElementById("fileText")
+var fileName;
+var fileExt;
+var percentVal;
+var files= [];
+var reader = new FileReader()
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
         if (user.emailVerified) {
-            setTimeout(() => {
-                uid = user.uid
-            }, 1000);
+            uid = user.uid
         }
         else {
             // login
@@ -42,51 +53,101 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-onAuthStateChanged(auth, (user) => {
-    currentUser = user
-})
 
-const uploadimg = (event) => {
-    fileType = event.target.files[0].type;
-    const storage = getStorage();
-    const uploadTask = storage().ref().child(`posts/${event.target.files[0]}`)
-
-    uploadTask.on('state_changed',
-        (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            var uploadPercentage = Math.round(progress)
-            progressDiv.style.display = "block"
-            progressBar.style.width = `${uploadPercentage}%`
-            progressBar.innerHTML = `${uploadPercentage}%`
-        },
-        (error) => {
-            console.log(error.message);
-        },
-        () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                url = downloadURL;
-                done.style.display = "block"
-                progressDiv.style.display = "none"
-            });
-        }
-    );
+function getFileExt(file){
+    var temp = file.name.split('.');
+    var ext = temp.slice((temp.length-1), (temp.length));
+    return '.'+ext[0]
 }
-    var date = new Date().toLocaleDateString();
 
-    function createPost(){
-        if(postValue !== "" || url !== ""){
-            firebase.firestore().collection("posts").add({
-                postvalue: postValue.value,
-                uid: currentUser.uid,
-                url: url,
-                filetype: fileType,
-                like: [],
-                dislikes: [],
-                comments: [],
-                Date: `${d}`
-            })
-            .then((res) => {
-                firebase.firestore()
-            })
-        }
+function getFileName(file) {
+    var temp = file.name.split(".")
+    var fname = temp.slice(0,-1).join('.');
+    return fname
+}
+
+function getFile(e){
+    files = e.target.files;
+    fileName = getFileName(files[0])
+    fileExt = getFileExt(files[0])
+    fileText.innerHTML = fileName
+    fileText.style.backgroundColor = "white"
+    fileText.style.color = "black"
+    extLab.innerHTML = fileExt
+    extLab.style.backgroundColor = "white"
+    extLab.style.color = "black"
+    reader.readAsDataURL(files[0])
+}
+
+reader.onload = function () {
+    myImg.src = reader.result
+}
+
+async function uploadImg(){
+    var imgToUpload = files[0];
+    fileName = getFileName(files[0])
+    fileExt = getFileExt(files[0])
+    if(!postValue.value || postValue.value == " "){
+        alert("Input something for the post")
     }
+    else if(postValue.value !== " "){
+        var imgName = `${postValue.value}/${fileName}${fileExt}`;
+        const metaData = {
+            contentType: imgToUpload.type
+        }
+        const storage = getStorage()
+        const storageRef = sRef(storage, "Posts/" + imgName)
+        const UploadTask = uploadBytesResumable(storageRef, imgToUpload, metaData);
+
+        UploadTask.on("state-changed", (snapshot) => {
+            progressDiv.style.display = "block"
+            percentVal = Math.floor((snapshot.bytesTransferred / snapshot.totalBytes)*100);
+            progressBar.style.color = "white"
+            progressBar.style.width = `${percentVal}%`;
+            progressBar.innerHTML = `${percentVal}%`
+
+            if(progressBar.innerHTML == "100%"){
+                done.style.display = "block"
+                done.style.backgroundColor = "white"
+                done.innerHTML = "DONE"
+                progressDiv.style.display = "none"
+            }
+        },
+
+        (error) => {
+                console.log(error);
+                alert("error: image not uploaded")
+        },
+
+        () => {
+            getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) => {
+                saveURLtoRealTiemDB(downloadURL);    
+            })    
+        }            
+        )
+    }
+}
+
+function saveURLtoRealTiemDB(URL) {
+    var name = fileText.innerHTML;  
+    var ext = extLab.innerHTML;
+    var hour = new Date().getHours()
+    var min = new Date().getMinutes()
+    var sec = new Date().getSeconds()
+    var date = new Date().toLocaleDateString();
+    set(refDB(realdb, `posts/` + postValue.value + name + hour + ":"+ min + ":" + sec),{
+        userPost: uid,
+        postValue: postValue.value,
+        ImageName: (name+ext),
+        ImgURL: URL,
+        like: 0,
+        dislikes: 0,
+        comments: {},
+        date: date,
+    })
+    console.log(uid);
+}
+
+
+    uploadFilesBtn.addEventListener("change", getFile)
+    createPostBtn.addEventListener("click", uploadImg)

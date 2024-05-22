@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyApxMylzZxo4C_p_OAoUuh5B5RnBrUpBCs",
@@ -13,6 +14,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
     import {getDatabase,ref,get,set,child,update,remove,} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
     const db = getDatabase();
+    const auth = getAuth(app)
     //ref
     
 
@@ -26,11 +28,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
       let td3 = document.createElement("td")
       var role = document.createElement("h6")
       let td4 = document.createElement("td")
+      let td5 = document.createElement("td")
       let changeRoleBtn = document.createElement("button")
 
       td1.innerHTML = ++userNo;
       td2.innerHTML = username;
       td4.innerHTML = uid;
+      td5.innerHTML = provider;
       role.innerHTML = roleNo;
       td3.appendChild(role)
 
@@ -107,5 +111,24 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
   const uploadProducts = () =>{
     
   }
+//   onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//         if (user.emailVerified) {
+//             setTimeout(() => {
+//                 uid = user.uid
+//             }, 1000);
+//         }
+//         else {
+//             // login
+//             setTimeout(() => {
+//                 window.location.assign("../html/login.html");
+//             }, 1000);
+//         }
+//     }
+// });
+
+onAuthStateChanged(auth, (user) => {
+    currentUser = user
+})
 
     window.onload = getAllData;

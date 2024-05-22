@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    color: white;
+  }
+  body, html{
+    width: 100%;
+    height: 100%;
+    background-color: black;
+  }
+
+  #root{
+    background-color: black;
+    color: white;
+  }
+
+
+  #content{
+    display: flex;
+    flex-flow: column;
+  }
+  .container{
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    flex-flow: column;
+    color: rgb(0, 0, 0);
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 15px 0px;
+  }
+
+  .container .imgContainer{
+    width: 12%;
+    display: flex;
+  }
+
+  .container .imgContainer img{
+    width: 75%;
+    border-radius: 100px;
+  }
+
+  .container .nameDiv{
+    width: 20%;
+  }
+
+  .container .nameDiv .name{
+    color: rgb(0, 0, 0);
+    font-size: 26px;
+  }
+
+  .container .addFriendBtn{
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    font-size: 15px;
+    padding: 5px;
+    transition: all 1s ease;
+  }
+
+  .container .addFriendBtn:hover{
+    transition: 0.5s;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    
+  }
