@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getDatabase, get, child, set, ref as refDB, update} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getDatabase, get, child, set, ref as refDB, update, remove} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
+import { getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { getStorage, ref as sRef,uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 const auth = getAuth();
 const db = getDatabase();
@@ -23,6 +23,7 @@ const userName = document.getElementById("userName")
 const inputUsername = document.getElementById("username");
 const inputDescription = document.getElementById("userdescription")
 const userDataBtn = document.getElementById("updatedatabutton")
+const description = document.getElementById("description")
 var userdata = document.getElementById("editabledatadiv");
 const messageData = userdata.message
 
@@ -51,7 +52,6 @@ onAuthStateChanged(auth,(user) => {
           );
         }
 
-
         if(res.val().CoverPicture !== ""){
           profileWallpaperImg.setAttribute(
             "src",
@@ -64,7 +64,15 @@ onAuthStateChanged(auth,(user) => {
             "../assets/Wallpaper.png"
           )
         }
-    })
+
+        if(res.val().Description !== ""){
+          description.innerHTML = res.val().Description
+        }
+
+        if(res.val().Description == ""){
+          description.innerHTML = "No Description"
+        }
+      })
 
     } else {
       window.location.assign("../html/login.html");
@@ -91,11 +99,23 @@ onAuthStateChanged(auth,(user) => {
                   postVal.setAttribute("class", "postVal");
                   postVal.innerHTML = postRes.val().postValue;
                   text.appendChild(postVal)
+
+                  let postValUpdate = document.createElement("input")
+                  postValUpdate.setAttribute("class", "postValInp")
+                  postValUpdate.style.color = "black"
+                  postValUpdate.style.backgroundColor = "white"
+                  postValUpdate.placeholder = "Post a new feeling"
+                  text.appendChild(postValUpdate)
     
                   let postDate = document.createElement("h7")
                   postDate.setAttribute("class", "postDate")
                   postDate.innerHTML = postRes.val().date
                   text.appendChild(postDate)
+
+                  let postTime = document.createElement("h7")
+                  postTime.setAttribute("class", "postTime")
+                  postTime.innerHTML = postRes.val().time
+                  text.appendChild(postTime)
     
                   container.appendChild(text)
     
@@ -118,7 +138,7 @@ onAuthStateChanged(auth,(user) => {
                   let dislikeBtn = document.createElement("i")
                   dislikeBtn.setAttribute("class" , "fa-solid fa-thumbs-down")
                   reactDiv.appendChild(dislikeBtn)
-    
+
                   let likeArray = document.createElement("h5")
                   likeArray.setAttribute("class", "reactArray")
                   likeArray.innerHTML = postRes.val().like
@@ -128,22 +148,57 @@ onAuthStateChanged(auth,(user) => {
                   dislikeArray.setAttribute("class", "reactArray")
                   dislikeArray.innerHTML = postRes.val().dislikes
                   dislikeBtn.appendChild(dislikeArray)
-                  
                   container.appendChild(reactDiv)
+
+                  let funcPost = document.createElement("div")
+                  funcPost.setAttribute("class", "funcPostDiv")
+                  container.appendChild(funcPost)
+
+                  let updatePost = document.createElement("button")
+                  updatePost.setAttribute("class", "updatePostBtn")
+                  updatePost.innerHTML = "Update"
+                  funcPost.appendChild(updatePost)
+
+                  let deletePost = document.createElement("button")
+                  deletePost.setAttribute("class", "deletePostBtn")
+                  deletePost.innerHTML = "Delete"
+                  funcPost.appendChild(deletePost)
+
+                  updatePost.addEventListener('click', function(){
+                    update(refDB(db, "posts/" + postRes.val().postKey),{
+                      postValue: postValUpdate.value,
+
+                    }).then(() => {
+                      alert("Updated")
+                      location.reload()
+                    })
+                    console.log(postRes.val().postKey)
+                  })
+
+                  deletePost.addEventListener('click', function(){
+                    remove(refDB(db, "posts/" + postRes.val().postKey)).then(() => {
+                      alert("Deleted")
+                      location.reload()
+                    })
+                    console.log(postRes.val().postKey)
+                  })
                   showposts.appendChild(container)
                 }
               });
         })
 
     userDataBtn.onclick = function changeUserData(){
-      if(inputUsername.value == ""){
-        alert("Input something")
+      if(inputDescription.value !== ""){
+        update(refDB(db, `userAuthList/${uid}`),{
+          Description: inputDescription.value
+      })
+        console.log("Done");
+        location.reload()
       }
-  
-      else if(inputUsername.value !== "" || inputDescription.value !== ""){
+
+      else if(inputUsername.value !== ""){
         update(refDB(db, `userAuthList/${uid}`),{
           username: inputUsername.value,
-          Description: inputDescription.value
       })
         console.log("Done");
         location.reload()
@@ -251,6 +306,7 @@ onAuthStateChanged(auth,(user) => {
   postsshowbutton.addEventListener("click", () => {
     userdata.style.display = "none";
     currentuserpost.style.display = "block";
+    description.style.display = "none"
 
     postsshowbutton.style.backgroundColor = "purple";
     postsshowbutton.style.color = "white";
@@ -264,6 +320,7 @@ onAuthStateChanged(auth,(user) => {
   showuserprofilebutton.addEventListener("click", () => {
     userdata.style.display = "block";
     currentuserpost.style.display = "none";
+    description.style.display = "block"
 
     showuserprofilebutton.style.backgroundColor = "purple";
     showuserprofilebutton.style.color = "white";
@@ -272,3 +329,11 @@ onAuthStateChanged(auth,(user) => {
     postsshowbutton.style.color = "white";
     document.getElementById("currentuserpostsdiv").style.display = "none";
   });
+
+  let signOutBtn = document.getElementById("signOutBtn");
+    let SignOut = () =>{
+      signOut(auth).then(() => {
+        window.location.href = "./login.html"
+      })
+    }
+    signOutBtn.addEventListener('click', SignOut);

@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getDatabase, get, child, set, ref as refDB, update} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getDatabase, get, child, set, ref as refDB, update, remove} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { getStorage, ref as sRef,uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 const auth = getAuth();
 const db = getDatabase();
@@ -13,7 +13,6 @@ let uid;
 
 onAuthStateChanged(auth,(user) => {
   if (user) {
-    
     if (user.emailVerified) {
       uid = user.uid
       console.log(uid);
@@ -22,8 +21,7 @@ onAuthStateChanged(auth,(user) => {
     window.location.assign("../html/login.html");
   }
   let posts = []
-        
-        get(child(dbref, `posts/`)).then((snapshot) => {
+        get(child(dbref, `posts`)).then((snapshot) => {
           if(snapshot.size === 0 ){
             messageDiv.style.display = "flex"
             load.style.display = "none"
@@ -33,8 +31,8 @@ onAuthStateChanged(auth,(user) => {
             load.style.display = "none"
             snapshot.forEach((postRes) => {
               posts.push(postRes)
-              console.log(posts);
-
+              var postID = postRes.val().postKey
+              
               let container = document.createElement("div")
               container.setAttribute("class", "container")
 
@@ -86,8 +84,13 @@ onAuthStateChanged(auth,(user) => {
               postDate.setAttribute("class", "postDate")
               postDate.innerHTML = postRes.val().date
               text.appendChild(postDate)
-              container.appendChild(text)
               
+              let postTime = document.createElement("h7")
+              postTime.setAttribute("class", "postTime")
+              postTime.innerHTML = postRes.val().time
+              text.appendChild(postTime)
+              
+              container.appendChild(text)
               let img = document.createElement("img")
               img.setAttribute("class", "postImg")
               img.setAttribute("src", postRes.val().ImgURL)
@@ -99,22 +102,55 @@ onAuthStateChanged(auth,(user) => {
               reactDiv.setAttribute("class", "reactDiv")
 
               let likeBtn = document.createElement("i")
-              likeBtn.setAttribute("class" , "fa-solid fa-thumbs-up")
+              likeBtn.setAttribute("class" , "fa-solid fa-heart")
               reactDiv.appendChild(likeBtn)
 
-              let dislikeBtn = document.createElement("i")
-              dislikeBtn.setAttribute("class" , "fa-solid fa-thumbs-down")
-              reactDiv.appendChild(dislikeBtn)
+              let likeTitle = document.createElement("h5")
+              likeTitle.setAttribute("class", "reactArray")
+              likeTitle.innerHTML = postRes.val().like
+              likeBtn.appendChild(likeTitle)
 
-              let likeArray = document.createElement("h5")
-              likeArray.setAttribute("class", "reactArray")
-              likeArray.innerHTML = postRes.val().like
-              likeBtn.appendChild(likeArray)
+              get(child(dbref, `likes/${postID}/`)).then((res) => {
+                likeTitle.innerHTML = res.size
+              })
 
-              let dislikeArray = document.createElement("h5")
-              dislikeArray.setAttribute("class", "reactArray")
-              dislikeArray.innerHTML = postRes.val().dislikes
-              dislikeBtn.appendChild(dislikeArray)
+              //button like
+              likeBtn.addEventListener("click", likePost)
+              function likePost(){
+                var user = auth.currentUser;
+                if(user){
+                  get(child(dbref, `likes/${postID}/${uid}`)).then((snapshot) => {
+                    if(snapshot.val() == true){
+                      remove(refDB(db, `likes/${postID}/${uid}`))
+                      likeBtn.style.color = "white"
+                      location.reload()
+                    }
+                    else{
+                      var userUid = user.uid;
+                      var postRef = refDB(db,`likes/${postID}/${userUid}`)
+                      // set(refDB(db,`likes/${postID}/${userUid}`, true))
+                      set(postRef, true)
+                      .then(() => {
+                        updateLikeButton()
+                        console.log("Successed");
+                        location.reload()
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                      })
+                    }
+                  })
+                }
+              }
+              window.onload = updateLikeButton()
+              function updateLikeButton(){
+                get(child(dbref, `likes/${postID}/${uid}`)).then((snapshot) => {
+                  if(snapshot.val() == true){
+                    likeBtn.style.color = "red"
+                  }
+                })
+              }
+
               
               //add in
               container.appendChild(reactDiv)
@@ -130,6 +166,8 @@ let signOutBtn = document.getElementById("signOutBtn");
     let SignOut = () =>{
       sessionStorage.removeItem("user-creds");
       sessionStorage.removeItem("user-info");
-      window.location.href = "./login.html"
+      signOut(auth).then(() => {
+        window.location.href = "./login.html"
+      })
     }
     signOutBtn.addEventListener('click', SignOut);

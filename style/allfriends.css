@@ -15,15 +15,14 @@
     color: white;
   }
 
-
   #content{
     display: flex;
     flex-flow: column;
   }
+
   .container{
     display: flex;
     background-color: rgb(255, 255, 255);
-    flex-flow: column;
     color: rgb(0, 0, 0);
     align-items: center;
     justify-content: center;
@@ -64,5 +63,8 @@
     cursor: pointer;
     color: rgb(0, 0, 0);
     background-color: rgb(255, 255, 255);
-    
+  }
+
+  .userProfileDiv {
+    flex-direction: column;
   }

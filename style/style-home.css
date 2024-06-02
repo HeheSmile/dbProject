@@ -28,7 +28,8 @@
 .reactDiv{
   width: 50%;
   display: flex;
-  justify-content: left;
+  /* justify-content: left; */
+  flex-direction: column;
 }
 
 .reactDiv > i{
@@ -46,7 +47,7 @@
 
 .reactDiv > i > .reactArray{
   color: white;
-  position: absolute;
+  padding-left: 6px;
 }
 
 .container .imgContainer{
@@ -64,9 +65,15 @@
 
 .textDiv{
   width: 50%;
+  display: flex;
+  flex-direction: column;
 }
 
 .textDiv .postDate{
+  color: rgb(198, 198, 198);
+}
+
+.textDiv .postTime{
   color: rgb(198, 198, 198);
 }
 

@@ -4,7 +4,8 @@ import {
     getAuth,
     signInWithEmailAndPassword,
     GoogleAuthProvider,
-    signInWithPopup
+    signInWithPopup,
+    signOut
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
 const firebaseConfig = {
@@ -63,7 +64,6 @@ loginGoogleBtn.addEventListener('click', function () {
     signInWithPopup(auth, provider)
         .then((result) => {
             const user = result.user;
-            
             get(child(dbref, "userAuthList/" + user.providerData[0].uid)).then((snapshot) => {
                 if(snapshot.exists){
                     sessionStorage.setItem("user-creds", JSON.stringify(user.email));

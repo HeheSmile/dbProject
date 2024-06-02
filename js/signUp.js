@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import {getDatabase, ref, set,} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { getFirestore, getDocs, setDoc, doc, collection, addDoc} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 const firebaseConfig = {
     apiKey: "AIzaSyApxMylzZxo4C_p_OAoUuh5B5RnBrUpBCs",
@@ -61,7 +61,5 @@ let RegisterUser = evt => {
             console.log(error.message);
         })
 }
-
-
 //assigns
 form.addEventListener("submit", RegisterUser);

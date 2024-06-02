@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getStorage, ref as sRef ,uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { getDatabase, get, child, set, ref as refDB } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getDatabase, get, child, set, ref as refDB, push } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
 const firebaseConfig = {
     apiKey: "AIzaSyApxMylzZxo4C_p_OAoUuh5B5RnBrUpBCs",
     authDomain: "firedb1-4914e.firebaseapp.com",
@@ -85,13 +85,15 @@ reader.onload = function () {
 
 async function uploadImg(){
     var imgToUpload = files[0];
+    const newPostKey = push(child(refDB(realdb), 'posts'))
+    const postUid = newPostKey.key
     fileName = getFileName(files[0])
     fileExt = getFileExt(files[0])
     if(!postValue.value || postValue.value == " "){
         alert("Input something for the post")
     }
     else if(postValue.value !== " "){
-        var imgName = `${postValue.value}/${fileName}${fileExt}`;
+        var imgName = `${postValue.value}/${postUid}${fileName}${fileExt}`;
         const metaData = {
             contentType: imgToUpload.type
         }
@@ -135,19 +137,25 @@ function saveURLtoRealTiemDB(URL) {
     var min = new Date().getMinutes()
     var sec = new Date().getSeconds()
     var date = new Date().toLocaleDateString();
-    set(refDB(realdb, `posts/` + postValue.value + name + hour + ":"+ min + ":" + sec),{
+    const newPostKey = push(child(refDB(realdb), 'posts'))
+    const postUid = newPostKey.key
+    set(refDB(realdb, `posts/`+ postUid),{
         userPost: uid,
+        postKey: postUid,
         postValue: postValue.value,
         ImageName: (name+ext),
         ImgURL: URL,
-        like: 0,
-        dislikes: 0,
-        comments: {},
         date: date,
+        time: hour + "h : "+ min + "min"
     })
-    console.log(uid);
 }
-
-
     uploadFilesBtn.addEventListener("change", getFile)
     createPostBtn.addEventListener("click", uploadImg)
+
+    let signOutBtn = document.getElementById("signOutBtn");
+    let SignOut = () =>{
+        signOut(auth).then(() => {
+            window.location.href = "./login.html"
+        })
+    }
+    signOutBtn.addEventListener('click', SignOut);
