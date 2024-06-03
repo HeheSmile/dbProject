@@ -65,32 +65,37 @@ onAuthStateChanged(auth,(user) => {
               })
               userInfo.appendChild(userFav)
 
+              let colSpec = document.createElement("div")
+              colSpec.setAttribute("class", "colSpec")
+              userInfo.appendChild(colSpec)
+
               let userNamePost = document.createElement("h5")
               userNamePost.setAttribute("class", "userNamePost")
               get(child(dbref, "userAuthList/" + postRes.val().userPost)).then((res) => {
                 userNamePost.innerHTML = res.val().username
               })
-              userInfo.appendChild(userNamePost)
+              colSpec.appendChild(userNamePost)
 
               text.appendChild(userInfo)
 
               //get post data
+              let postDate = document.createElement("h7")
+              postDate.setAttribute("class", "postDate")
+              postDate.innerHTML = postRes.val().date
+              colSpec.appendChild(postDate)
+              
+              let postTime = document.createElement("h7")
+              postTime.setAttribute("class", "postTime")
+              postTime.innerHTML = postRes.val().time
+              colSpec.appendChild(postTime)
+
               let postVal = document.createElement("h6");
               postVal.setAttribute("class", "postVal");
               postVal.innerHTML = postRes.val().postValue;
               text.appendChild(postVal)
 
-              let postDate = document.createElement("h7")
-              postDate.setAttribute("class", "postDate")
-              postDate.innerHTML = postRes.val().date
-              text.appendChild(postDate)
-              
-              let postTime = document.createElement("h7")
-              postTime.setAttribute("class", "postTime")
-              postTime.innerHTML = postRes.val().time
-              text.appendChild(postTime)
-              
               container.appendChild(text)
+
               let img = document.createElement("img")
               img.setAttribute("class", "postImg")
               img.setAttribute("src", postRes.val().ImgURL)
@@ -108,6 +113,7 @@ onAuthStateChanged(auth,(user) => {
               let likeTitle = document.createElement("h5")
               likeTitle.setAttribute("class", "reactArray")
               likeTitle.innerHTML = postRes.val().like
+              likeTitle.style.color = "black"
               likeBtn.appendChild(likeTitle)
 
               get(child(dbref, `likes/${postID}/`)).then((res) => {

@@ -47,10 +47,9 @@ function addItemToTable(username, roleNo, uid) {
   td4.innerHTML = uid;
   role.innerHTML = roleNo;
   td3.appendChild(role);
-
+  
   let dropDown = document.createElement("div");
   dropDown.setAttribute("id", "dropDownDiv");
-
   let dropDownShow = document.createElement("i");
   dropDown.appendChild(dropDownShow);
   dropDownShow.setAttribute("class", "fa-solid fa-angle-down dropdownbuttons");
@@ -143,6 +142,7 @@ function addItemToTable(username, roleNo, uid) {
         deletePost.addEventListener('click', function () {
           remove(ref(db, "posts/" + postID)).then(() => {
             alert("Deleted")
+            remove(ref(db, "likes/" + postRes.val().postKey))
             location.reload()
           })
           console.log(postRes.val().postKey)

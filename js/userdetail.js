@@ -35,6 +35,7 @@ var percentVal;
 var reader = new FileReader()
 
 onAuthStateChanged(auth,(user) => {
+    console.log(user.uid)
     if (user.emailVerified) {
       uid = user.uid
       get(child(dbref, "userAuthList/" + uid)).then((res)=>{
@@ -132,28 +133,25 @@ onAuthStateChanged(auth,(user) => {
                   reactDiv.setAttribute("class", "reactDiv")
     
                   let likeBtn = document.createElement("i")
-                  likeBtn.setAttribute("class" , "fa-solid fa-thumbs-up")
+                  likeBtn.setAttribute("class" , "fa-solid fa-heart")
                   reactDiv.appendChild(likeBtn)
-    
-                  let dislikeBtn = document.createElement("i")
-                  dislikeBtn.setAttribute("class" , "fa-solid fa-thumbs-down")
-                  reactDiv.appendChild(dislikeBtn)
 
-                  let likeArray = document.createElement("h5")
-                  likeArray.setAttribute("class", "reactArray")
-                  likeArray.innerHTML = postRes.val().like
-                  likeBtn.appendChild(likeArray)
-    
-                  let dislikeArray = document.createElement("h5")
-                  dislikeArray.setAttribute("class", "reactArray")
-                  dislikeArray.innerHTML = postRes.val().dislikes
-                  dislikeBtn.appendChild(dislikeArray)
+                  let likeTitle = document.createElement("h5")
+                  likeTitle.setAttribute("class", "reactArray")
+                  likeTitle.innerHTML = postRes.val().like
+                  likeTitle.style.color = "white"
+                  likeBtn.appendChild(likeTitle)
+
+                  get(child(dbref, `likes/${postRes.val().postKey}/`)).then((res) => {
+                    likeTitle.innerHTML = res.size
+                  })
+
                   container.appendChild(reactDiv)
 
                   let funcPost = document.createElement("div")
                   funcPost.setAttribute("class", "funcPostDiv")
                   container.appendChild(funcPost)
-
+                  
                   let updatePost = document.createElement("button")
                   updatePost.setAttribute("class", "updatePostBtn")
                   updatePost.innerHTML = "Update"
@@ -178,6 +176,7 @@ onAuthStateChanged(auth,(user) => {
                   deletePost.addEventListener('click', function(){
                     remove(refDB(db, "posts/" + postRes.val().postKey)).then(() => {
                       alert("Deleted")
+                      remove(refDB(db, "likes/" + postRes.val().postKey))
                       location.reload()
                     })
                     console.log(postRes.val().postKey)

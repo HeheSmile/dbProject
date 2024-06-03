@@ -228,24 +228,18 @@ input {
 .reactDiv{
   width: 50%;
   display: flex;
-  justify-content: left;
+  flex-direction: column;
 }
 
 .reactDiv > i{
-  padding-left: 20px;
   font-size: 25px;
-  color: white;
+  color: rgb(255, 255, 255);
   transition: all 0.5s ease;
-}
-
-.reactDiv > i:hover{
-  transition: 0.5s;
-  cursor: pointer;
-  color: red;
 }
 
 .reactDiv > i > .reactArray{
   color: white;
+  padding-left: 6px;
 }
 
 .postValInp{

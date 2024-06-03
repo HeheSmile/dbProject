@@ -38,12 +38,12 @@ let signInUser = evt => {
                     ))
                     sessionStorage.setItem("user-creds", JSON.stringify(credentials.user.email));
                     sessionStorage.setItem("user-uid", JSON.stringify(credentials.user.uid))
-                    if (snapshot.val().roleNo == "0") {
+                    if (snapshot.val().roleNo == 0) {
                         window.location.href = ("../html/home.html")
                     }
                     
 
-                    else if (snapshot.val().roleNo == "1") {
+                    else if (snapshot.val().roleNo == 1) {
                         window.location.href = ("../html/admin.html")
                     }
 
@@ -60,38 +60,35 @@ let signInUser = evt => {
 //google sign in
 const loginGoogleBtn = document.getElementById('logInGoogleBtn')
 const provider = new GoogleAuthProvider(app);
+var d = new Date().toLocaleDateString();
 loginGoogleBtn.addEventListener('click', function () {
     signInWithPopup(auth, provider)
         .then((result) => {
             const user = result.user;
-            get(child(dbref, "userAuthList/" + user.providerData[0].uid)).then((snapshot) => {
-                if(snapshot.exists){
-                    sessionStorage.setItem("user-creds", JSON.stringify(user.email));
-                    sessionStorage.setItem("user-info", JSON.stringify(user.displayName))
-                    sessionStorage.setItem("user-uid", JSON.stringify(user.providerData[0].uid))
-
-                    if (snapshot.val().roleNo == "0") {
+            console.log(user.uid);
+            get(child(dbref, "userAuthList/" + user.uid)).then((snapshot) => {
+                if(snapshot.exists()){
+                    const role = snapshot.val().roleNo
+                    if (role === 0) {
                         window.location.href = ("../html/home.html")
                     }
 
-                    else if (snapshot.val().roleNo == "1") {
+                    else if (role === 1) {
                         window.location.href = ("../html/admin.html")
                     }
                 }
 
                 else{
-                    set(ref(db, "userAuthList/" + user.providerData[0].uid), {
+                    set(ref(db, "userAuthList/" + user.uid), {
                         username: user.displayName,
                         email: user.email,
-                        provider: user.providerData[0].providerId,
-                        uid: user.providerData[0].uid,
+                        uid: user.uid,
                         roleNo: 0,
                         date: `${d}`,
-                        profilePicture: "",
-                        coverPicture: "",
-                        description: ""
+                        ProfilePicture: "",
+                        CoverPicture: "",
+                        Description: ""
                     });
-                    window.location.href = ('../html/home.html')
                 }
             })
         })
