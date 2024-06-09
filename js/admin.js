@@ -124,8 +124,6 @@ function addItemToTable(username, roleNo, uid) {
         let deletePost = document.createElement("button")
         deletePost.setAttribute("class", "deletePostBtn")
         deletePost.innerHTML = "Delete"
-
-        deletePost.style
         funcPost.appendChild(deletePost)
 
         updatePost.addEventListener('click', function () {
@@ -143,12 +141,109 @@ function addItemToTable(username, roleNo, uid) {
           remove(ref(db, "posts/" + postID)).then(() => {
             alert("Deleted")
             remove(ref(db, "likes/" + postRes.val().postKey))
+            remove(refDB(db,`comments/${postRes.val().postKey}`))
             location.reload()
           })
           console.log(postRes.val().postKey)
         })
 
+        let dropDownComment = document.createElement("div")
+        dropDownComment.setAttribute("id", "dropDownDiv")
+        container.appendChild(dropDownComment)
+        let dropDownShowComment = document.createElement("i")
+        dropDownComment.appendChild(dropDownShowComment)
+        dropDownShowComment.setAttribute("class", "fa-solid fa-angle-down dropdownbuttons")
+        dropDownShowComment.setAttribute("id", "dropDownShow")
+        dropDownShowComment.style.color = "white"
+
+        let dropDownHideComment = document.createElement("i")
+        dropDownComment.appendChild(dropDownHideComment)
+        dropDownHideComment.setAttribute("class", "fa-solid fa-angle-up dropdownbuttons")
+        dropDownHideComment.setAttribute("id", "dropDownHide")
+        dropDownHideComment.style.display = "none"
+        dropDownHideComment.style.color = "white"
+
+        let commentDisplay = document.createElement("div")
+        commentDisplay.setAttribute("class", "commentDisplay")
+        commentDisplay.style.display = "none"
+
+        dropDownShowComment.addEventListener("click",()=>{
+          dropDownHideComment.style.display = "block"
+          dropDownShowComment.style.display ="none"
+          commentDisplay.style.display= "flex"
+         })
+
+         dropDownHideComment.addEventListener("click",()=>{
+          dropDownHideComment.style.display = "none"
+          dropDownShowComment.style.display ="block"
+          commentDisplay.style.display= "none"
+         })
+
+        get(child(dbref, `comments/${postID}`)).then((res) => {
+          res.forEach((snapshot) => {
+
+            let commentContainer = document.createElement("div")
+            commentContainer.setAttribute("class", "commentContainer")
+
+            let colSpecComment = document.createElement("div");
+            colSpecComment.setAttribute("class", "colSpecComment")
+            commentContainer.appendChild(colSpecComment)
+
+            let userFavComment = document.createElement("img");
+            userFavComment.setAttribute("class", "userFavComment")
+            get(child(dbref, `userAuthList/${snapshot.val().userUid}`)).then((res) => {
+              if (res.val().ProfilePicture !== "") {
+                userFavComment.setAttribute(
+                  "src",
+                  res.val().ProfilePicture
+                )
+              }
+
+              if (res.val().ProfilePicture == "") {
+                userFavComment.setAttribute(
+                  "src",
+                  "https://nullchiropractic.com/wp-content/uploads/2017/11/profile-default-male-768x768.jpg"
+                )
+              }
+            })
+            colSpecComment.appendChild(userFavComment)
+
+            let col = document.createElement("div")
+            col.setAttribute("class", "col")
+            colSpecComment.appendChild(col)
+
+            let commentUsername = document.createElement("h5")
+            commentUsername.setAttribute("class", "commentUsername");
+            get(child(dbref, `userAuthList/${snapshot.val().userUid}`)).then((res) => {
+              commentUsername.innerHTML = res.val().username
+            })
+            commentUsername.style.color = "black"
+            col.appendChild(commentUsername)
+
+            let incol = document.createElement("div")
+            incol.setAttribute("class", "inCol")
+            col.appendChild(incol);
+
+            let commentTime = document.createElement("h6");
+            commentTime.setAttribute("class", "commentTime");
+            commentTime.innerHTML = snapshot.val().time
+            incol.appendChild(commentTime)
+
+            let commentDate = document.createElement("h6")
+            commentDate.setAttribute("class", "commentDate")
+            commentDate.innerHTML = snapshot.val().date;
+            incol.appendChild(commentDate)
+
+            let commentValue = document.createElement("p")
+            commentValue.setAttribute("class", "commentVal")
+            commentValue.innerHTML = snapshot.val().comment;
+            commentContainer.appendChild(commentValue)
+
+            commentDisplay.appendChild(commentContainer)
+          })
+        })
         posts.appendChild(container)
+        container.appendChild(commentDisplay)
       }
     });
   });

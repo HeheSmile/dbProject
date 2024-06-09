@@ -7,7 +7,7 @@
 body, html{
   width: 100%;
   height: 100%;
-  background-color: black;
+  /* background-color: black; */
 }
 
 #container{
@@ -122,13 +122,14 @@ input {
 
 #description{
   font-size: 25px;
+  color: black;
 }
 
 #userprofileandpostsdiv {
   padding: 0px 20px;
 }
 .usersdetailsbuttons {
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
   width: 50%;
   padding: 5px 23px;
   cursor: pointer;
@@ -142,7 +143,7 @@ input {
   justify-content: center;
 }
 #editabledatadiv {
-  background-color: rgb(0, 0, 0) !important;
+  /* background-color: rgb(0, 0, 0) !important; */
 }
 .buttons {
   display: flex;
@@ -175,13 +176,13 @@ input {
 
 #userdescription {
   resize: none;
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
   width: 100%;
   padding: 5px 10px;
   font-size: 14px;
   font-weight: 600;
-  border: 2px solid #d4d9de;
+  border: 2px solid #000000;
   outline: none;
   border-radius: 5px;
 }
@@ -199,9 +200,10 @@ input {
 }
 
 #username{
-  background-color: black;
-  border: 2px solid white;
+  background-color: white;
+  border: 2px solid black;
 }
+
 .usernameanddetailsdiv {
   width: 65%;
 }
@@ -219,26 +221,31 @@ input {
 
 .container{
   padding: 40px;
-  width: 60%;
+  width: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: white;
+  border-radius: 25px;
+  margin-top: 15px;
+  z-index: 1;
+  box-shadow: 1em 5em 5em rgb(0, 0, 0, 0.3);
 }
 
 .reactDiv{
-  width: 50%;
+  width: 80%;
+  max-width: 75%;
   display: flex;
   flex-direction: column;
 }
 
 .reactDiv > i{
   font-size: 25px;
-  color: rgb(255, 255, 255);
+  color: rgb(255, 0, 0);
   transition: all 0.5s ease;
 }
 
 .reactDiv > i > .reactArray{
-  color: white;
   padding-left: 6px;
 }
 
@@ -251,11 +258,12 @@ input {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 80%;
 }
 
 .funcPostDiv{
   display: flex;
-  width: 50%;
+  width: 80%;
 
 }
 
@@ -274,23 +282,24 @@ input {
 }
 
 .imgContainer .postImg{
-  min-width: 10%;
-  max-width: 35%;
+  width: 100%;
   align-items: center;
 }
 
 .textDiv{
-  width: 50%;
+  width: 80%;
   display: flex;
   flex-direction: column;
 }
 
 .textDiv .postDate{
   color: rgb(198, 198, 198);
+  font-size: 15px;
 }
 
 .textDiv .postTime{
   color: rgb(198, 198, 198);
+  font-size: 15px;
 }
 #maincreate {
   height: 18vh;

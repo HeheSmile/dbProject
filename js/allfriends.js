@@ -14,6 +14,7 @@ onAuthStateChanged(auth,(user) => {
       uid = user.uid
       get(child(dbref, "userAuthList")).then((snapshot) => {
         snapshot.forEach((res) => {
+          if(res.val().uid !== uid){
             let container = document.createElement("div")
             container.setAttribute("class", "container")
 
@@ -103,6 +104,7 @@ onAuthStateChanged(auth,(user) => {
               userProfDiv.style.display= "none"
              })
             content.appendChild(container)
+          }
         })
       })
     } else {

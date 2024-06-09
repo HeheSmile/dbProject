@@ -99,6 +99,8 @@ onAuthStateChanged(auth,(user) => {
                   let postVal = document.createElement("h6");
                   postVal.setAttribute("class", "postVal");
                   postVal.innerHTML = postRes.val().postValue;
+                  postVal.style.color = "black"
+                  postVal.style.fontSize = "23px"
                   text.appendChild(postVal)
 
                   let postValUpdate = document.createElement("input")
@@ -139,7 +141,7 @@ onAuthStateChanged(auth,(user) => {
                   let likeTitle = document.createElement("h5")
                   likeTitle.setAttribute("class", "reactArray")
                   likeTitle.innerHTML = postRes.val().like
-                  likeTitle.style.color = "white"
+                  likeTitle.style.color = "black"
                   likeBtn.appendChild(likeTitle)
 
                   get(child(dbref, `likes/${postRes.val().postKey}/`)).then((res) => {
@@ -177,6 +179,7 @@ onAuthStateChanged(auth,(user) => {
                     remove(refDB(db, "posts/" + postRes.val().postKey)).then(() => {
                       alert("Deleted")
                       remove(refDB(db, "likes/" + postRes.val().postKey))
+                      remove(refDB(db,`comments/${postRes.val().postKey}`))
                       location.reload()
                     })
                     console.log(postRes.val().postKey)
@@ -187,7 +190,10 @@ onAuthStateChanged(auth,(user) => {
         })
 
     userDataBtn.onclick = function changeUserData(){
-      if(inputDescription.value !== ""){
+      if(inputDescription.value == "" && inputUsername.value == ""){
+        alert("Nothing to update")
+      }
+      else if(inputDescription.value !== ""){
         update(refDB(db, `userAuthList/${uid}`),{
           Description: inputDescription.value
       })
@@ -310,8 +316,8 @@ onAuthStateChanged(auth,(user) => {
     postsshowbutton.style.backgroundColor = "purple";
     postsshowbutton.style.color = "white";
 
-    showuserprofilebutton.style.backgroundColor = "black";
-    showuserprofilebutton.style.color = "white";
+    showuserprofilebutton.style.backgroundColor = "white";
+    showuserprofilebutton.style.color = "black";
     document.getElementById("currentuserpostsdiv").style.display = "flex";
   });
 
@@ -324,8 +330,8 @@ onAuthStateChanged(auth,(user) => {
     showuserprofilebutton.style.backgroundColor = "purple";
     showuserprofilebutton.style.color = "white";
 
-    postsshowbutton.style.backgroundColor = "black";
-    postsshowbutton.style.color = "white";
+    postsshowbutton.style.backgroundColor = "white";
+    postsshowbutton.style.color = "black";
     document.getElementById("currentuserpostsdiv").style.display = "none";
   });
 

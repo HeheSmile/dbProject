@@ -42,7 +42,7 @@
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(213, 213, 213, 0.95);
     width: 100%;
     /* margin-right: 40px; */
   }
@@ -59,7 +59,7 @@
     color: rgb(255, 255, 255);
     font-size: 20px;
     text-align: center;
-    border-bottom: 2px solid rgb(255, 255, 255);
+    border-bottom: 2px solid rgba(213, 213, 213, 0.95);
     padding: 13px 40px 15px 40px;
     transition: all 0.5s ease;
   }
