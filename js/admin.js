@@ -261,7 +261,7 @@ function addItemToTable(username, roleNo, uid) {
   });
   td3.appendChild(dropDown);
 
-  changeRoleBtn.innerHTML = "Change Role?";
+  changeRoleBtn.innerHTML = "Edit";
   changeRoleBtn.classList.add("change-button");
   td3.appendChild(changeRoleBtn);
 
